@@ -9,7 +9,7 @@ import androidx.fragment.app.Fragment
 import com.example.floclone.databinding.FragmentHomeBinding
 
 
-// 여기 HomeFragmet 클래스는 다시 해봐야함 .
+// 여기 HomeFragmet 클래스는 다시 해봐야함 .from 미니
 
 //Fragment를 상속받음
 class HomeFragment : Fragment() {
