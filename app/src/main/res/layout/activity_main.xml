@@ -9,6 +9,18 @@
     tools:context=".MainActivity">
     <!--바텀 네비뷰를 보이게 하려면 스크롤뷰로 하면 안보임..! -->
 
+    <!-- 0dp로 하는 이유는 유연하게 하기위해!-->
+    <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/frame_layout"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@+id/main_bottom_nav"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        />
+
+
 
 
 

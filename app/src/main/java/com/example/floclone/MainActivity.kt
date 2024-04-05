@@ -16,8 +16,21 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        val view = binding.root
+        setContentView(binding.root)
 
-
+        setStartFragment()
 
     }
+
+    private fun setStartFragment() {
+        val homeFragment = HomeFragment() // 홈 프래그먼트 생성
+
+        // 시작 프래그먼트 생성
+        supportFragmentManager.beginTransaction()
+            .add(R.id.frame_layout, homeFragment).commit()
+    }
+
+
 }
