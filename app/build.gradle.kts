@@ -7,6 +7,11 @@ android {
     namespace = "com.example.floclone"
     compileSdk = 34
 
+    //fragment를 위해 https://juahnpop.tistory.com/224 설정
+    viewBinding{
+        enable = true
+    }
+
     defaultConfig {
         applicationId = "com.example.floclone"
         minSdk = 21
