@@ -1,5 +1,6 @@
 package com.example.floclone
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 //뷰바인딩을 위해 임포트 함수를 사용하기 위해?
@@ -20,7 +21,13 @@ class MainActivity : AppCompatActivity() {
         val view = binding.root
         setContentView(binding.root)
 
-        setStartFragment()
+        binding.mainPlayBar.setOnClickListener {
+            //어디로 갈지 설정
+            //startActivity(Intent(this,SongActivity::class.java))
+        }
+
+        //setStartFragment()
+        initBottomNavigation()
 
     }
 
@@ -32,5 +39,23 @@ class MainActivity : AppCompatActivity() {
             .add(R.id.frame_layout, homeFragment).commit()
     }
 
+    private fun initBottomNavigation() {
 
+        supportFragmentManager.beginTransaction()
+            .replace(R.id.frame_layout, HomeFragment())
+            .commitAllowingStateLoss()
+
+        binding.mainBottomNav.setOnItemSelectedListener { item ->
+            when (item.itemId) {
+
+                R.id.homeFragment -> {
+                    supportFragmentManager.beginTransaction()
+                        .replace(R.id.frame_layout, HomeFragment())
+                        .commitAllowingStateLoss()
+                    return@setOnItemSelectedListener true
+                }
+            }
+            false
+        }
+    }
 }
