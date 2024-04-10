@@ -256,7 +256,7 @@
                     app:layout_constraintTop_toTopOf="parent"
                     android:layout_marginStart="20dp"
                     android:layout_marginTop="10dp"
-                    android:src="@drawable/img_album_exp3"
+                    android:src="@drawable/img_album_exp2"
 
                     />
 
@@ -264,7 +264,7 @@
                     android:id="@+id/home_today_album1_title_tv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="내일의 우리"
+                    android:text="LILAC"
                     android:textStyle="bold"
                     app:layout_constraintStart_toStartOf="@+id/home_today_album1_iv"
                     app:layout_constraintTop_toBottomOf="@+id/home_today_album1_iv"
@@ -275,7 +275,7 @@
                     android:id="@+id/home_today_album1_singer_tv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="카더가든"
+                    android:text="아이유(IU)"
                     app:layout_constraintStart_toStartOf="@+id/home_today_album1_iv"
                     app:layout_constraintTop_toBottomOf="@+id/home_today_album1_title_tv"
                     android:layout_marginTop="2dp"
@@ -290,7 +290,8 @@
                     app:layout_constraintTop_toTopOf="parent"
                     android:layout_marginStart="20dp"
                     android:layout_marginTop="10dp"
-                    android:src="@drawable/img_album_exp2"
+                    android:src="@drawable/img_album_exp3"
+
 
                     />
 
@@ -298,7 +299,7 @@
                     android:id="@+id/home_today_album2_title_tv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="LILAC"
+                    android:text="내일의 우리"
                     android:textStyle="bold"
                     app:layout_constraintStart_toStartOf="@+id/home_today_album2_iv"
                     app:layout_constraintTop_toBottomOf="@+id/home_today_album2_iv"
@@ -309,7 +310,7 @@
                     android:id="@+id/home_today_album2_singer_tv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="아이유[IU]"
+                    android:text="카더가든"
                     app:layout_constraintStart_toStartOf="@+id/home_today_album2_iv"
                     app:layout_constraintTop_toBottomOf="@+id/home_today_album2_title_tv"
                     android:layout_marginTop="2dp"

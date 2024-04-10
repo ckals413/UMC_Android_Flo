@@ -13,7 +13,7 @@
         android:layout_width="25dp"
         android:layout_height="25dp"
         android:layout_marginStart="20dp"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="30dp"
         android:background="@color/white"
         android:scaleType="fitXY"
         android:src="@drawable/btn_player_setting"
@@ -65,7 +65,6 @@
         android:id="@+id/song_music_title_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
         android:text="제목"
         android:textColor="@color/black"
         android:textSize="18sp"
@@ -79,7 +78,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
-        android:text="가수 이름"
+        android:text="가수이름"
         android:textColor="@color/black"
         android:textSize="14sp"
         app:layout_constraintEnd_toEndOf="@+id/song_music_title_tv"
@@ -102,7 +101,7 @@
         android:layout_height="280dp"
         android:layout_marginTop="20dp"
         android:scaleType="fitXY"
-        android:src="@drawable/img_album_exp2"
+        android:src="@drawable/img_album_exp3"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintStart_toStartOf="parent"
@@ -135,7 +134,7 @@
         android:id="@+id/song_like_iv_layout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="25dp"
+        android:layout_marginTop="10dp"
         android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="@+id/song_album_iv"
         app:layout_constraintStart_toStartOf="@+id/song_album_iv"
@@ -246,6 +245,7 @@
             android:layout_height="60dp"
             android:src="@drawable/btn_miniplay_mvpause"
             android:visibility="gone" />
+        <!--화면에 안보이게 함 gone-->
 
         <ImageView
             android:id="@+id/song_next_iv"

@@ -28,6 +28,10 @@ class HomeFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentHomeBinding.inflate(layoutInflater)
+        binding.homeTodayAlbum1Iv.setOnClickListener {
+            (context as MainActivity).supportFragmentManager.beginTransaction().replace(R.id.frame_layout, AlbumFragment()).commitAllowingStateLoss()
+        }
+
         return binding.root
     }
 
