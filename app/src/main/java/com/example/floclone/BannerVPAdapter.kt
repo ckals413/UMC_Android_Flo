@@ -5,7 +5,6 @@ import androidx.viewpager2.adapter.FragmentStateAdapter
 
 class BannerVPAdapter(fragment: Fragment) :FragmentStateAdapter(fragment) {
     //꼭필요한 함수 오버라이드해서 사용
-
     //리스트에 여러개의 프래그먼트 보관
     private val fragmentlist : ArrayList<Fragment> = ArrayList()
 
@@ -21,6 +20,5 @@ class BannerVPAdapter(fragment: Fragment) :FragmentStateAdapter(fragment) {
         fragmentlist.add(fragment)
         notifyItemInserted(fragmentlist.size-1) // 리스트에 새로운 값을 추가한걸 알려준다.
     }
-
 
 }

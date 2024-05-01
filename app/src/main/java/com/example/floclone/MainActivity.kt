@@ -55,6 +55,26 @@ class MainActivity : AppCompatActivity() {
                         .commitAllowingStateLoss()
                     return@setOnItemSelectedListener true
                 }
+                R.id.lookFragment -> {
+                    supportFragmentManager.beginTransaction()
+                        .replace(R.id.frame_layout, LookFragment())
+                        .commitAllowingStateLoss()
+                    return@setOnItemSelectedListener true
+                }
+                R.id.searchFragment -> {
+                    supportFragmentManager.beginTransaction()
+                        .replace(R.id.frame_layout, SearchFragment())
+                        .commitAllowingStateLoss()
+                    return@setOnItemSelectedListener true
+                }
+                R.id.lockerFragment -> {
+                    supportFragmentManager.beginTransaction()
+                        .replace(R.id.frame_layout, LockerFragment())
+                        .commitAllowingStateLoss()
+                    return@setOnItemSelectedListener true
+                }
+
+
             }
             false
         }
