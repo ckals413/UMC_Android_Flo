@@ -33,6 +33,13 @@ class HomeFragment : Fragment() {
             (context as MainActivity).supportFragmentManager.beginTransaction().replace(R.id.frame_layout, AlbumFragment()).commitAllowingStateLoss()
         }
 
+        //------------------ 상단 추천 부분 ----------------------------//
+        val homeRecommendAdapter = HomeRecommendVPAdapter(this)
+        binding.homeRecommendVp.adapter=homeRecommendAdapter
+        binding.homeRecommendVp.orientation=ViewPager2.ORIENTATION_HORIZONTAL
+
+
+        //------------------ 배너 부분 ----------------------------//
         val bannerAdapter= BannerVPAdapter(this)
         //이미지도 함께 넣어줌 -> BannerFragment.kt에서 인자 값을 int형으로 받음
         bannerAdapter.addFragment(BannerFragment(R.drawable.img_home_viewpager_exp))
