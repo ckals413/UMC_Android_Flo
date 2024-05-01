@@ -2,12 +2,16 @@ package com.example.floclone
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.viewpager2.widget.ViewPager2
 import com.example.floclone.databinding.FragmentHomeBinding
+import java.util.Timer
+import kotlin.concurrent.scheduleAtFixedRate
 
 
 // 여기 HomeFragmet 클래스는 다시 해봐야함 .from 미니
@@ -16,6 +20,9 @@ import com.example.floclone.databinding.FragmentHomeBinding
 class HomeFragment : Fragment() {
     //FragmentHomeBinding은 레이아웃 파일에 따라 자동으로 생성된 바인딩 클래스
     private lateinit var binding : FragmentHomeBinding // 뷰 바인딩
+    private val timer = Timer()
+    private val handler = Handler(Looper.getMainLooper())
+
 
     //onViewCreated() 메서드는 Fragment의 뷰가 생성된 후 호출
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -33,11 +40,12 @@ class HomeFragment : Fragment() {
             (context as MainActivity).supportFragmentManager.beginTransaction().replace(R.id.frame_layout, AlbumFragment()).commitAllowingStateLoss()
         }
 
+
         //------------------ 상단 추천 부분 ----------------------------//
         val homeRecommendAdapter = HomeRecommendVPAdapter(this)
         binding.homeRecommendVp.adapter=homeRecommendAdapter
         binding.homeRecommendVp.orientation=ViewPager2.ORIENTATION_HORIZONTAL
-
+        startAutoSlide(homeRecommendAdapter)
 
         //------------------ 배너 부분 ----------------------------//
         val bannerAdapter= BannerVPAdapter(this)
@@ -50,5 +58,20 @@ class HomeFragment : Fragment() {
 
         return binding.root
     }
+
+    private fun startAutoSlide(adpater : HomeRecommendVPAdapter) {
+        // 일정 간격으로 슬라이드 변경 (3초마다)
+        timer.scheduleAtFixedRate(3000, 3000) {
+            handler.post {
+                val nextItem = binding.homeRecommendVp.currentItem + 1
+                if (nextItem < adpater.itemCount) {
+                    binding.homeRecommendVp.currentItem = nextItem
+                } else {
+                    binding.homeRecommendVp.currentItem = 0 // 마지막 페이지에서 첫 페이지로 순환
+                }
+            }
+        }
+    }
+
 
 }
