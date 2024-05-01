@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.viewpager2.widget.ViewPager2
 import com.example.floclone.databinding.FragmentHomeBinding
 
 
@@ -31,6 +32,14 @@ class HomeFragment : Fragment() {
         binding.homeTodayAlbum1Iv.setOnClickListener {
             (context as MainActivity).supportFragmentManager.beginTransaction().replace(R.id.frame_layout, AlbumFragment()).commitAllowingStateLoss()
         }
+
+        val bannerAdapter= BannerVPAdapter(this)
+        //이미지도 함께 넣어줌 -> BannerFragment.kt에서 인자 값을 int형으로 받음
+        bannerAdapter.addFragment(BannerFragment(R.drawable.img_home_viewpager_exp))
+        bannerAdapter.addFragment(BannerFragment(R.drawable.img_home_viewpager_exp2))
+        //뷰페이저와 어댑터 연결
+        binding.homeBannerVp.adapter = bannerAdapter
+        binding.homeBannerVp.orientation = ViewPager2.ORIENTATION_HORIZONTAL //좌우로 스크롤 되게 함
 
         return binding.root
     }

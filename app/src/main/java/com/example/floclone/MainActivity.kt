@@ -28,6 +28,7 @@ class MainActivity : AppCompatActivity() {
             //어디로 갈지 설정
             //mainPlayBar를 눌렀을 때 SongActivity로 전환
             //startActivity(Intent(this,SongActivity::class.java))
+            //Song인스턴스의 title과 singer을 넣기위한 방법 putExtrax
             val intent = Intent(this,SongActivity::class.java)
             intent.putExtra("title",song.title)
             intent.putExtra("singer",song.singer)

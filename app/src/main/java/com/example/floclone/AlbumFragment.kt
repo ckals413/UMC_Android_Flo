@@ -19,6 +19,8 @@ class AlbumFragment :Fragment(){
         binding.albumBackIv.setOnClickListener{
             (context as MainActivity).supportFragmentManager.beginTransaction().replace(R.id.frame_layout, HomeFragment()).commitAllowingStateLoss()
         }
+
+        //밑에 앨범 어댑터를 이용해서 붙인다.
         val albumAdapter = AlbumVPAdapter(this)
         binding.albumContentVp.adapter = albumAdapter
 
