@@ -16,11 +16,16 @@
             android:name="com.google.android.actions"
             android:resource="@menu/bottom_nav_menu" />
         -->
+
+        <activity android:name=".MainActivity"/>
         <activity
             android:name=".HomeFragment"
             android:exported="true" />
+        <!--        splashActivity를 사용할 것! 등록
+            intentFilter 작성 -> 가장 처음 화면에 표시 될 것임
+-->
         <activity
-            android:name=".MainActivity"
+            android:name=".SplashActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
