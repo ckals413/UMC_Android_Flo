@@ -17,6 +17,8 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        //앱이 로드되는 동안에는 splash화면이 나오지만 -> onCreate가 호출되면 >>
+        setTheme(R.style.Theme_FloClone) // 원래 처음 실행 화면으로 돌려줌
         setContentView(R.layout.activity_main)
         binding = ActivityMainBinding.inflate(layoutInflater)
         val view = binding.root

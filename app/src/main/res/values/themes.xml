@@ -6,4 +6,9 @@
     </style>
 
     <style name="Theme.FloClone" parent="Base.Theme.FloClone" />
+    <style name="SplashTheme" parent = "Theme.AppCompat.NoActionBar">
+        <item name = "android:windowBackground">@drawable/splash</item>
+        <!-- 맨위에 상태바 투명으로 -->
+        <item name="android:statusBarColor">@color/transparent</item>
+    </style>
 </resources>
