@@ -54,7 +54,8 @@
         android:layout_width="25dp"
         android:layout_height="25dp"
         android:layout_marginTop="15dp"
-        android:background="@android:color/transparent"        android:scaleType="fitXY"
+        android:background="@android:color/transparent"
+        android:scaleType="fitXY"
         android:src="@drawable/btn_player_more"
         app:layout_constraintEnd_toEndOf="@+id/song_down_ib"
         app:layout_constraintStart_toStartOf="@+id/song_down_ib"
@@ -166,9 +167,9 @@
         android:paddingStart="0dp"
         android:paddingEnd="0dp"
         android:progress="0"
-        android:progressBackgroundTint="@color/black"
-        android:progressTint="@color/black"
-        android:thumb="@color/black"
+        android:progressBackgroundTint="@color/song_player_bg"
+        android:progressTint="@color/song_player"
+        android:thumb="@color/transparent"
         android:max="100000"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -201,9 +202,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="00:00"
-        android:textColor="@color/black"
+        android:textColor="@color/song_player"
         app:layout_constraintStart_toStartOf="@+id/song_progress_sb"
-        app:layout_constraintTop_toBottomOf="@+id/song_progress_sb" />
+        app:layout_constraintTop_toBottomOf="@+id/song_progress_sb"
+      />
 
 
     <TextView

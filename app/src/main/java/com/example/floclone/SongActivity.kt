@@ -12,7 +12,10 @@ import com.example.floclone.databinding.ActivitySongBinding
 class SongActivity : AppCompatActivity(){
     //선언은 지금하지만 나중에 초기화 할게
     //카멜 표기식
+    //전역변수
+    lateinit var song: Song
     lateinit var binding : ActivitySongBinding
+    lateinit var timer : Timer //타이머 변수 초기화
 
 
     private var isRepeatEnabled = false // 반복 재생 활성화 상태 저장
@@ -25,6 +28,8 @@ class SongActivity : AppCompatActivity(){
         binding = ActivitySongBinding.inflate(layoutInflater)
         //최상단 (root)
         setContentView(binding.root)
+        initSong()
+        setPlayer(song)
 
         //반복재생
         binding.songRepeatIv.setOnClickListener{
@@ -42,29 +47,59 @@ class SongActivity : AppCompatActivity(){
             finish()
         }
         binding.songMiniplayerIv.setOnClickListener {
-            setPlayerStatus(false)
-        }
-        binding.songPauseIv.setOnClickListener {
             setPlayerStatus(true)
         }
-        //클릭했을 때 값 가져오기? //인텐트가 올 수 도있고 안올수도 있어서 if문으로
-        if(intent.hasExtra("title")&&intent.hasExtra("singer")){
-            binding.songMusicTitleTv.text=intent.getStringExtra("title")
-            binding.songSingerNameTv.text=intent.getStringExtra("singer")
+        binding.songPauseIv.setOnClickListener {
+            setPlayerStatus(false)
         }
+
+
+    }
+
+    //song에서 데이터를 받아오는 함수
+    private fun initSong(){
+        if(intent.hasExtra("title")&&intent.hasExtra("singer")){
+            song = Song(
+                intent.getStringExtra("title")!!,
+                intent.getStringExtra("singer")!!,
+                intent.getIntExtra("second",0)!!,
+                intent.getIntExtra("playTime",0)!!,
+                intent.getBooleanExtra("siplaying",false)
+            )
+        }
+        startTimer()
+    }
+
+    private fun setPlayer(song:Song){
+        binding.songMusicTitleTv.text=intent.getStringExtra("title")!!
+        binding.songSingerNameTv.text=intent.getStringExtra("singer")!!
+        //시간
+        binding.songStartTimeTv.text = String.format("%02d:%02d",song.second/60, song.second%60)
+        binding.songEndTimeTv.text = String.format("%02d:%02d",song.playTime/60, song.playTime%60)
+        binding.songProgressSb.progress = (song.second*1000/song.playTime)
+
+        setPlayerStatus(song.isPlaying)
 
     }
 
     //재생 버튼 변경
     private fun setPlayerStatus(isPlaying :Boolean){
+        song.isPlaying = isPlaying
+        timer.isPlaying = isPlaying
+
         if(isPlaying){
-            binding.songMiniplayerIv.visibility= View.VISIBLE
-            binding.songPauseIv.visibility = View.GONE
-        }
-        else{
             binding.songMiniplayerIv.visibility= View.GONE
             binding.songPauseIv.visibility = View.VISIBLE
         }
+        else{
+            binding.songMiniplayerIv.visibility= View.VISIBLE
+            binding.songPauseIv.visibility = View.GONE
+        }
+    }
+
+    private fun startTimer(){
+        timer = Timer(song.playTime,song.isPlaying)
+        timer.start()
     }
 
     //반복 재생 버튼변경
@@ -102,6 +137,44 @@ class SongActivity : AppCompatActivity(){
             //Toast.makeText(applicationContext, "랜덤 재생 비활성화", Toast.LENGTH_SHORT).show()
         }
     }
+
+    //내부 클래스 외부 변수 접근하기 위함
+    inner class Timer(private  val playTime: Int, var isPlaying: Boolean = true):Thread(){
+        private var second : Int = 0
+        private var mills : Float = 0f
+
+        override fun run(){
+            super.run()
+            while(true){
+                //노래 재생관리
+                if(second >= playTime){
+                    break
+                }
+                if(isPlaying){
+                    sleep(50)
+                    mills += 50
+
+                    //뷰를 랜더링 runOnUiThead 사용(seekBar업데이트)
+                    //seekBar적용
+                    runOnUiThread {
+                        binding.songProgressSb.progress = ((mills / playTime)*100).toInt()
+                    }
+                    //mills 1000단위마다 1초 증가
+                    if(mills % 1000 == 0f){
+                        runOnUiThread {
+                            //뷰 렌더링 작업
+                            binding.songStartTimeTv.text = String.format("%02d:%02d",second/60, second%60)
+                        }
+                        second++
+                    }
+
+                }
+            }
+
+        }
+    }
+
+
 
 
 
