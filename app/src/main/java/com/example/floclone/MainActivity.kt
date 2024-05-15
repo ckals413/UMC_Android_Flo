@@ -24,7 +24,7 @@ class MainActivity : AppCompatActivity() {
         val view = binding.root
         setContentView(binding.root)
 
-        val song = Song(binding.mainPlayTitleTv.text.toString(),binding.mainPlaySingerTv.text.toString(),0,60,false)
+        val song = Song(binding.mainPlayTitleTv.text.toString(),binding.mainPlaySingerTv.text.toString(),0,60,false,"music_tomorow")
 
         binding.mainPlayBar.setOnClickListener {
             //어디로 갈지 설정
@@ -37,6 +37,7 @@ class MainActivity : AppCompatActivity() {
             intent.putExtra("second",song.second)
             intent.putExtra("playTime",song.playTime)
             intent.putExtra("isPlaying",song.isPlaying)
+            intent.putExtra("music",song.music)
 
             startActivity(intent)
         }
