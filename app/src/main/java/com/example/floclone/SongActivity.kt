@@ -190,17 +190,20 @@ class SongActivity : AppCompatActivity(){
     override fun onPause() {
         super.onPause()
         setPlayerStatus(false)
+        //binding.songStartTimeTv.setText("00:00") --> 시간을 초기화 하는건 어떻게?
+        //binding.songEndTimeTv.setText("01:00")
+
         song.second = ((binding.songProgressSb.progress*song.playTime/100))/1000
         //song 데이터저장
         //앱이 종료되었다가 다시 실행되어도 저장된 데이터를 꺼내서 사용하게해줌,에디터라는 것 을 사용
-        val sharedPreferences = getSharedPreferences("song", MODE_PRIVATE)
+        val sharedPreferences = getSharedPreferences("song", MODE_PRIVATE) //song은 sharedPreference의 이름
         val editor = sharedPreferences.edit() //에디터를 사용해서 하나하나 넣어도 되지만 json으로 한번에 객체로 만들어 넣는다!
         // editor.putString("title",song.title)
         // editor.putString("title",song.singer),,,, //gson을 사용 -> 자바객체를 json으로 변환을 쉽게한다.
         val songJson = gson.toJson(song) //song객체를 json포멧으로 변환
-        editor.putString("song",songJson)
+        editor.putString("songData",songJson)
         editor.apply() //git에서 commit과 push와 같은 작용을 함
-        
+
     }
 
     override fun onDestroy() {
