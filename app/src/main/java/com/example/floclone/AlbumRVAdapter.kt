@@ -9,7 +9,7 @@ import java.util.ArrayList
 class AlbumRVAdapter (private val albumList: ArrayList<Album>): RecyclerView.Adapter<AlbumRVAdapter.ViewHolder>(){
 
     interface MyItemClickLitener{
-        fun onItemClick()
+        fun onItemClick(album: Album) //데이터도 같이
     }
 
     private lateinit var  mItemClickListener: MyItemClickLitener
@@ -29,7 +29,7 @@ class AlbumRVAdapter (private val albumList: ArrayList<Album>): RecyclerView.Ada
         holder.bind(albumList[position])
         //클릭 이벤트 처리
         //클릭 인터페이스 처리
-        holder.itemView.setOnClickListener{ mItemClickListener.onItemClick()}
+        holder.itemView.setOnClickListener{ mItemClickListener.onItemClick(albumList[position])}
     }
 
     //마지막이 언젠지 알 수 있음

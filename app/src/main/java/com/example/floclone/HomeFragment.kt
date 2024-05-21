@@ -12,6 +12,7 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.viewpager2.widget.ViewPager2
 import com.example.floclone.databinding.FragmentHomeBinding
+import com.google.gson.Gson
 import java.util.Timer
 import kotlin.concurrent.scheduleAtFixedRate
 
@@ -59,11 +60,9 @@ class HomeFragment : Fragment() {
         binding.homeTodayMusicAlbumRv.layoutManager = LinearLayoutManager(context,LinearLayoutManager.HORIZONTAL,false )
 
         albumRVAdapter.setMyItemClickListener(object :AlbumRVAdapter.MyItemClickLitener{
-            override fun onItemClick() {
+            override fun onItemClick(album: Album) {
                 //앨범 프레그먼트로 전환
-                (context as MainActivity).supportFragmentManager.beginTransaction()
-                .replace(R.id.frame_layout, AlbumFragment())
-                .commitAllowingStateLoss()
+                changeAlbumFragment(album)
             }
 
         })
@@ -88,6 +87,18 @@ class HomeFragment : Fragment() {
             //배너와 인디케이터 연결
             binding.homeBannerIndicator.setViewPager((binding.homeBannerVp))
             return binding.root
+    }
+
+    private fun changeAlbumFragment(album: Album) {
+        (context as MainActivity).supportFragmentManager.beginTransaction()
+            .replace(R.id.frame_layout, AlbumFragment().apply {
+                arguments = Bundle().apply {
+                    val gson = Gson()
+                    val albumJson = gson.toJson(album)
+                    putString("album", albumJson)
+                }
+            })
+            .commitAllowingStateLoss()
     }
 
     private fun startAutoSlide(adpater : HomeRecommendVPAdapter) {
