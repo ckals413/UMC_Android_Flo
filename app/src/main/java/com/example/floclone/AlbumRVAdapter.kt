@@ -10,11 +10,22 @@ class AlbumRVAdapter (private val albumList: ArrayList<Album>): RecyclerView.Ada
 
     interface MyItemClickLitener{
         fun onItemClick(album: Album) //데이터도 같이
+        fun onRemoveAlbum(position: Int)
     }
 
     private lateinit var  mItemClickListener: MyItemClickLitener
     fun setMyItemClickListener(itemClickLitener: MyItemClickLitener){
         mItemClickListener = itemClickLitener
+    }
+
+    fun addItem(album: Album){
+        albumList.add(album)
+        notifyDataSetChanged()
+    }
+
+    fun removeItem(position: Int){
+        albumList.removeAt(position)
+        notifyDataSetChanged()
     }
 
     override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): AlbumRVAdapter.ViewHolder {
@@ -29,7 +40,8 @@ class AlbumRVAdapter (private val albumList: ArrayList<Album>): RecyclerView.Ada
         holder.bind(albumList[position])
         //클릭 이벤트 처리
         //클릭 인터페이스 처리
-        holder.itemView.setOnClickListener{ mItemClickListener.onItemClick(albumList[position])}
+        //holder.itemView.setOnClickListener{ mItemClickListener.onItemClick(albumList[position])}
+        holder.binding.itemAlbumTitleTv.setOnClickListener{mItemClickListener.onRemoveAlbum(position)}
     }
 
     //마지막이 언젠지 알 수 있음
