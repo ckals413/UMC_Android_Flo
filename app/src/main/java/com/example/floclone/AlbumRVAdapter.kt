@@ -40,8 +40,8 @@ class AlbumRVAdapter (private val albumList: ArrayList<Album>): RecyclerView.Ada
         holder.bind(albumList[position])
         //클릭 이벤트 처리
         //클릭 인터페이스 처리
-        //holder.itemView.setOnClickListener{ mItemClickListener.onItemClick(albumList[position])}
-        holder.binding.itemAlbumTitleTv.setOnClickListener{mItemClickListener.onRemoveAlbum(position)}
+        holder.itemView.setOnClickListener{ mItemClickListener.onItemClick(albumList[position])}
+        //holder.binding.itemAlbumTitleTv.setOnClickListener{mItemClickListener.onRemoveAlbum(position)}//클릭 시 리사이클러뷰 삭제 확인하는거
     }
 
     //마지막이 언젠지 알 수 있음
