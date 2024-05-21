@@ -7,7 +7,9 @@ import android.os.Looper
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.LinearLayout
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.viewpager2.widget.ViewPager2
 import com.example.floclone.databinding.FragmentHomeBinding
 import java.util.Timer
@@ -50,6 +52,11 @@ class HomeFragment : Fragment() {
             add(Album("Surf boy","혁오",R.drawable.img_album_exp6 ))
         }
 
+        //어댑터 arrayList연결
+        // 매개변수로 만들었던 데이터 리스트 던져줌
+        val albumRVAdapter = AlbumRVAdapter(albumDatas)
+        binding.homeTodayMusicAlbumRv.adapter = albumRVAdapter //어떤 어댑터를 사용해야하는지 지정
+        binding.homeTodayMusicAlbumRv.layoutManager = LinearLayoutManager(context,LinearLayoutManager.HORIZONTAL,false )
 
 
 
