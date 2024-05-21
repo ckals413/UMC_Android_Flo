@@ -39,15 +39,23 @@ class SavedSongRVAdapter(private val savedSongList: ArrayList<SavedSong>): Recyc
 
     override fun onBindViewHolder(holder: SavedSongRVAdapter.ViewHolder, position: Int) {
         holder.bind(savedSongList[position])
-        //holder.itemView.setOnClickListener{mItemClickListener.onItemClick()} //아이템이 클릭되었을 때 전체부분
-        holder.binding.itemSongMoreIv.setOnClickListener { mItemClickListener.onRemoveSavedSong(position) }//점3개 눌렀을 때
+
+        holder.binding.itemSongMoreIv.setOnClickListener {
+            mItemClickListener.onRemoveSavedSong(position)
+        }
+
+        // savedSongList[position]의 isToggled 상태에 따라 뷰의 초기 상태를 설정합니다
+        holder.binding.itmeSongMixonTg.visibility = if (savedSongList[position].isToggled) View.VISIBLE else View.GONE
+        holder.binding.itmeSongMixoffTg.visibility = if (savedSongList[position].isToggled) View.GONE else View.VISIBLE
 
         holder.binding.itmeSongMixonTg.apply {
             isClickable = true
             isFocusable = true
             setOnClickListener {
-                visibility = if (visibility == View.VISIBLE) View.GONE else View.VISIBLE
-                holder.binding.itmeSongMixoffTg.visibility = if (visibility == View.GONE) View.VISIBLE else View.GONE
+                val newState = visibility != View.VISIBLE
+                visibility = if (newState) View.VISIBLE else View.GONE
+                holder.binding.itmeSongMixoffTg.visibility = if (newState) View.GONE else View.VISIBLE
+                savedSongList[position].isToggled = newState // 토글 상태를 저장합니다
             }
         }
 
@@ -55,12 +63,14 @@ class SavedSongRVAdapter(private val savedSongList: ArrayList<SavedSong>): Recyc
             isClickable = true
             isFocusable = true
             setOnClickListener {
-                visibility = if (visibility == View.VISIBLE) View.GONE else View.VISIBLE
-                holder.binding.itmeSongMixonTg.visibility = if (visibility == View.GONE) View.VISIBLE else View.GONE
+                val newState = visibility != View.VISIBLE
+                visibility = if (newState) View.VISIBLE else View.GONE
+                holder.binding.itmeSongMixonTg.visibility = if (newState) View.GONE else View.VISIBLE
+                savedSongList[position].isToggled = !newState // 토글 상태를 저장합니다
             }
         }
-
     }
+
 
     override fun getItemCount(): Int = savedSongList.size
 
