@@ -215,6 +215,4 @@ class SongActivity : AppCompatActivity(){
     }
 
 
-
-
 }
