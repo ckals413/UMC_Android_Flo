@@ -7,6 +7,16 @@ import com.example.floclone.databinding.ItemAlbumBinding
 import java.util.ArrayList
 
 class AlbumRVAdapter (private val albumList: ArrayList<Album>): RecyclerView.Adapter<AlbumRVAdapter.ViewHolder>(){
+
+    interface MyItemClickLitener{
+        fun onItemClick()
+    }
+
+    private lateinit var  mItemClickListener: MyItemClickLitener
+    fun setMyItemClickListener(itemClickLitener: MyItemClickLitener){
+        mItemClickListener = itemClickLitener
+    }
+
     override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): AlbumRVAdapter.ViewHolder {
         //뷰 홀더 생성될 때 호출되는 함수
         val binding: ItemAlbumBinding = ItemAlbumBinding.inflate(LayoutInflater.from(viewGroup.context),viewGroup,false)
@@ -17,6 +27,9 @@ class AlbumRVAdapter (private val albumList: ArrayList<Album>): RecyclerView.Ada
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.bind(albumList[position])
+        //클릭 이벤트 처리
+        //클릭 인터페이스 처리
+        holder.itemView.setOnClickListener{ mItemClickListener.onItemClick()}
     }
 
     //마지막이 언젠지 알 수 있음

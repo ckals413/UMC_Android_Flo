@@ -58,7 +58,15 @@ class HomeFragment : Fragment() {
         binding.homeTodayMusicAlbumRv.adapter = albumRVAdapter //어떤 어댑터를 사용해야하는지 지정
         binding.homeTodayMusicAlbumRv.layoutManager = LinearLayoutManager(context,LinearLayoutManager.HORIZONTAL,false )
 
+        albumRVAdapter.setMyItemClickListener(object :AlbumRVAdapter.MyItemClickLitener{
+            override fun onItemClick() {
+                //앨범 프레그먼트로 전환
+                (context as MainActivity).supportFragmentManager.beginTransaction()
+                .replace(R.id.frame_layout, AlbumFragment())
+                .commitAllowingStateLoss()
+            }
 
+        })
 
             //------------------ 상단 추천 부분 ----------------------------//
             val homeRecommendAdapter = HomeRecommendVPAdapter(this)
