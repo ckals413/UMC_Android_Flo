@@ -47,7 +47,16 @@ class SavedSongFragment : Fragment(){
         binding.lockerSavedSongRecyclerView.adapter = savedSongRVAdapter
         binding.lockerSavedSongRecyclerView.layoutManager = LinearLayoutManager(context,LinearLayoutManager.VERTICAL,false)
 
+        savedSongRVAdapter.setMyItemClickListener(object :SavedSongRVAdapter.MyItemClickLitener{
+            override fun onItemClick() {
 
+            }
+
+            override fun onRemoveSavedSong(position: Int) {
+                savedSongRVAdapter.removeItem(position)
+            }
+
+        })
 
 
         return binding.root

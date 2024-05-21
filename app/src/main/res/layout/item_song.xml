@@ -48,24 +48,55 @@
         app:layout_constraintBottom_toBottomOf="@id/item_song_img_cardView"
         app:layout_constraintStart_toEndOf="@id/item_song_img_cardView"/>
 
-    <ImageView
-        android:id="@+id/item_song_play_iv"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
-        android:src="@drawable/btn_player_play"
-        android:layout_marginRight="5dp"
-        app:layout_constraintEnd_toStartOf="@id/item_song_more_iv"
-        app:layout_constraintTop_toTopOf="@id/item_song_more_iv"
-        app:layout_constraintBottom_toBottomOf="@id/item_song_more_iv"/>
-
-    <ImageView
-        android:id="@+id/item_song_more_iv"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
-        android:src="@drawable/btn_player_more"
-        android:layout_marginRight="5dp"
-        app:layout_constraintEnd_toEndOf="parent"
+    <LinearLayout
+        android:id="@+id/itme_song_LL"
+        app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginEnd="10dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/itme_song_mixoff_tg"
+            android:layout_width="50dp"
+            android:layout_height="25dp"
+            android:layout_gravity="center"
+            android:clickable="true"
+            android:focusable="true"
+            android:src="@drawable/btn_toggle_off" />
+
+        <ImageView
+            android:id="@+id/itme_song_mixon_tg"
+            android:layout_width="50dp"
+            android:layout_height="25dp"
+            android:layout_gravity="center"
+            android:clickable="true"
+            android:focusable="true"
+            android:src="@drawable/btn_toggle_on"
+            android:visibility="gone" />
+
+        <ImageView
+            android:id="@+id/item_song_play_iv"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:src="@drawable/btn_player_play"
+            android:layout_marginRight="5dp"
+            app:layout_constraintEnd_toStartOf="@id/item_song_more_iv"
+            app:layout_constraintTop_toTopOf="@id/item_song_more_iv"
+            app:layout_constraintBottom_toBottomOf="@id/item_song_more_iv"/>
+
+        <ImageView
+            android:id="@+id/item_song_more_iv"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:src="@drawable/btn_player_more"
+            android:layout_marginRight="5dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent" />
+
+    </LinearLayout>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
