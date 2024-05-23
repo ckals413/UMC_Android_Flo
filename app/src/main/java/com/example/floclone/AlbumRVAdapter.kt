@@ -1,5 +1,6 @@
 package com.example.floclone
 
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -40,7 +41,8 @@ class AlbumRVAdapter (private val albumList: ArrayList<Album>): RecyclerView.Ada
         holder.bind(albumList[position])
         //클릭 이벤트 처리
         //클릭 인터페이스 처리
-        holder.itemView.setOnClickListener{ mItemClickListener.onItemClick(albumList[position])}
+        holder.itemView.setOnClickListener{ mItemClickListener.onItemClick(albumList[position])} // 아이템 클릭 시데이터 넘겨줌
+        //holder.binding.itemAlbumPlayImgIv.setOnClickListener {mItemClickListener.onItemClick(albumList[position]) } // 앨범에 재생 버튼 클릭하면
         //holder.binding.itemAlbumTitleTv.setOnClickListener{mItemClickListener.onRemoveAlbum(position)}//클릭 시 리사이클러뷰 삭제 확인하는거
     }
 
@@ -48,6 +50,21 @@ class AlbumRVAdapter (private val albumList: ArrayList<Album>): RecyclerView.Ada
     override fun getItemCount(): Int = albumList.size
 
     inner class ViewHolder(val binding: ItemAlbumBinding): RecyclerView.ViewHolder(binding.root){
+        init{
+            sendToMiniPlayer()
+        }
+        //플레이 버튼 클릭하면 메인 엑티비티 제목, 가수명 전달(인텐트사용)[미니]
+        private fun sendToMiniPlayer() {
+            binding.itemAlbumPlayImgIv.setOnClickListener {
+                val intent = Intent(binding.root.context, MainActivity::class.java).apply {
+                    putExtra("album_title", albumList[adapterPosition].title)
+                    putExtra("album_singer", albumList[adapterPosition].singer)
+                    // 다른 필요한 정보들도 필요한 경우 추가
+                }
+                binding.root.context.startActivity(intent)
+            }
+        }
+
         fun bind(album: Album) {
             binding.itemAlbumTitleTv.text = album.title
             binding.itemAlbumSingerTv.text = album.singer
