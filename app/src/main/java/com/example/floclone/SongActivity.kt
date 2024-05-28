@@ -77,12 +77,13 @@ class SongActivity : AppCompatActivity(){
         }
         //하트
         binding.songLikeIv.setOnClickListener {
-            setLikeStatus(true)
+            //setLikeStatus(true)
+            setLike(songs[nowPos].isLike)
         }
-        //하트
-        binding.songLikeOnIv.setOnClickListener {
-            setLikeStatus(false)
-        }
+//        //하트
+//        binding.songLikeOnIv.setOnClickListener {
+//            setLikeStatus(false)
+//        }
         binding.songNextIv.setOnClickListener {
             moveSong(1)
         }
@@ -148,8 +149,16 @@ class SongActivity : AppCompatActivity(){
         //리소스 파일에서 string값으로 찾아서 리소스를 반환 -> resorce.getIdentifier
         val music = resources.getIdentifier(song.music, "raw",this.packageName)
         mediaPlayer = MediaPlayer.create(this,music) //미디어 플레이어에 어떤 음악이 실행될 지 알림
+
+        if(song.isLike){
+            binding.songLikeIv.setImageResource((R.drawable.ic_my_like_on))
+        }
+        else{
+            binding.songLikeIv.setImageResource((R.drawable.ic_my_like_off))
+        }
+
         setPlayerStatus(song.isPlaying)
-        setLikeStatus(song.isLike)
+       // setLikeStatus(song.isLike)
 
     }
 
@@ -172,21 +181,32 @@ class SongActivity : AppCompatActivity(){
         }
     }
 
-    //하트 버튼 변경
-    private fun setLikeStatus(isLike :Boolean){
-        songs[nowPos].isLike = isLike
+    private fun setLike(isLike: Boolean){
+        songs[nowPos].isLike = !isLike
+        songDB.songDao().updateIsLikeById(!isLike,songs[nowPos].id)
 
-        if(isLike){
-            binding.songLikeIv.visibility= View.GONE
-            binding.songLikeOnIv.visibility = View.VISIBLE
-
-        }
-        else{
-            binding.songLikeIv.visibility= View.VISIBLE
-            binding.songLikeOnIv.visibility = View.GONE
-
+        if(!isLike){
+            binding.songLikeIv.setImageResource(R.drawable.ic_my_like_on)
+        }else{
+            binding.songLikeIv.setImageResource(R.drawable.ic_my_like_off)
         }
     }
+
+//    //하트 버튼 변경
+//    private fun setLikeStatus(isLike :Boolean){
+//        songs[nowPos].isLike = isLike
+//
+//        if(isLike){
+//            binding.songLikeIv.visibility= View.GONE
+//            binding.songLikeOnIv.visibility = View.VISIBLE
+//
+//        }
+//        else{
+//            binding.songLikeIv.visibility= View.VISIBLE
+//            binding.songLikeOnIv.visibility = View.GONE
+//
+//        }
+//    }
 
 
     private fun startTimer(){
