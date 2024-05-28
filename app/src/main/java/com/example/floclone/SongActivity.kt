@@ -2,6 +2,7 @@ package com.example.floclone
 
 import android.media.MediaPlayer
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -21,6 +22,10 @@ class SongActivity : AppCompatActivity(){
     private var mediaPlayer: MediaPlayer? = null //미디어 플레이어
     private var gson: Gson = Gson() //gson선언
 
+    val songs = arrayListOf<Song>()
+    lateinit var songDB: SongDatabase
+    var nowPos = 0
+
 
     private var isRepeatEnabled = false // 반복 재생 활성화 상태 저장
     private var isRandomEnabled = false // 랜덤 재생 활성화 상태 저장
@@ -32,8 +37,10 @@ class SongActivity : AppCompatActivity(){
         binding = ActivitySongBinding.inflate(layoutInflater)
         //최상단 (root)
         setContentView(binding.root)
+
+        initPlayList()
         initSong()
-        setPlayer(song)
+
 
         //반복재생
         binding.songRepeatIv.setOnClickListener{
@@ -60,19 +67,32 @@ class SongActivity : AppCompatActivity(){
 
     }
 
+    private fun initPlayList(){
+        songDB = SongDatabase.getInstance(this)!!
+        songs.addAll(songDB.songDao().getSongs())
+    }
+
     //song에서 데이터를 받아오는 함수
     private fun initSong(){
-        if(intent.hasExtra("title")&&intent.hasExtra("singer")){
-            song = Song(
-                intent.getStringExtra("title")!!,
-                intent.getStringExtra("singer")!!,
-                intent.getIntExtra("second",0)!!,
-                intent.getIntExtra("playTime",0)!!,
-                intent.getBooleanExtra("siplaying",false),
-                intent.getStringExtra("music")!!
-            )
-        }
+        //sharedpreference로 값을 받아온다음 비교후 인덱스 값 반환하는 방식으로 변경
+        val spf = getSharedPreferences("song", MODE_PRIVATE)
+        val songId = spf.getInt("songId",0)
+
+        nowPos = getPlayingSongPosition(songId)
+
+        Log.d("now SongId",songs[nowPos].id.toString())
+
         startTimer()
+        setPlayer(songs[nowPos])
+    }
+
+    private fun getPlayingSongPosition(songId: Int): Int{
+        for(i in 0 until songs.size){
+            if(songs[i].id == songId){
+                return i
+            }
+        }
+        return 0
     }
 
     private fun setPlayer(song:Song){
@@ -213,6 +233,7 @@ class SongActivity : AppCompatActivity(){
         mediaPlayer?.release() //미디어 플레이어가 갖고있던 리소스 해제
         mediaPlayer = null //미디어 플레이어 해제
     }
+
 
 
 }

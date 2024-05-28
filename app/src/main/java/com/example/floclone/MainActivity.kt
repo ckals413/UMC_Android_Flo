@@ -34,18 +34,24 @@ class MainActivity : AppCompatActivity(){
         //val song = Song(binding.mainPlayTitleTv.text.toString(),binding.mainPlaySingerTv.text.toString(),0,60,false,"music_tomorow")
 
         binding.mainPlayBar.setOnClickListener {
-            //어디로 갈지 설정
-            //mainPlayBar를 눌렀을 때 SongActivity로 전환
-            //startActivity(Intent(this,SongActivity::class.java))
-            //Song인스턴스의 title과 singer을 넣기위한 방법 putExtrax
-            val intent = Intent(this,SongActivity::class.java)
-            intent.putExtra("title",song.title)
-            intent.putExtra("singer",song.singer)
-            intent.putExtra("second",song.second)
-            intent.putExtra("playTime",song.playTime)
-            intent.putExtra("isPlaying",song.isPlaying)
-            intent.putExtra("music",song.music)
+//            //어디로 갈지 설정
+//            //mainPlayBar를 눌렀을 때 SongActivity로 전환
+//            //startActivity(Intent(this,SongActivity::class.java))
+//            //Song인스턴스의 title과 singer을 넣기위한 방법 putExtrax
+//            val intent = Intent(this,SongActivity::class.java)
+//            intent.putExtra("title",song.title)
+//            intent.putExtra("singer",song.singer)
+//            intent.putExtra("second",song.second)
+//            intent.putExtra("playTime",song.playTime)
+//            intent.putExtra("isPlaying",song.isPlaying)
+//            intent.putExtra("music",song.music)
 
+            //이제 데이터를 넘길 때 인텐트 말고 song에 데이터를 저장
+            val editor = getSharedPreferences("song", MODE_PRIVATE).edit()
+            editor.putInt("songId",song.id)
+            editor.apply()
+
+            val intent = Intent(this, SongActivity::class.java)
             startActivity(intent)
         }
 
@@ -181,16 +187,29 @@ class MainActivity : AppCompatActivity(){
 
     override fun onStart(){
         super.onStart()
-        val sharedPreferences = getSharedPreferences("song", MODE_PRIVATE)
-        val songJson = sharedPreferences.getString("songData",null)
-        //val albumJson = getSharedPreferences("album", MODE_PRIVATE) //이건 아닌 것 같음, 데이터 받아오는 거
+//        val sharedPreferences = getSharedPreferences("song", MODE_PRIVATE)
+//        val songJson = sharedPreferences.getString("songData",null)
+//        //val albumJson = getSharedPreferences("album", MODE_PRIVATE) //이건 아닌 것 같음, 데이터 받아오는 거
+//
+//
+//        song = if(songJson == null){
+//            Song("내일의 우리","카더가든",0,60,false,"music_tomorow")
+//        }else{
+//            gson.fromJson(songJson,Song::class.java)
+//        }
 
+        val spf = getSharedPreferences("song", MODE_PRIVATE)
+        val songId = spf.getInt("songId",0)
 
-        song = if(songJson == null){
-            Song("내일의 우리","카더가든",0,60,false,"music_tomorow")
+        val songDB = SongDatabase.getInstance(this)!!
+        song = if(songId == 0){
+            songDB.songDao().getSong(1)
         }else{
-            gson.fromJson(songJson,Song::class.java)
+            songDB.songDao().getSong(songId) //아니라면 저장된 거 가져오기
         }
+
+        Log.d("Song ID",song.id.toString())
+
         setMiniPlayer(song)
 
     }
