@@ -18,6 +18,10 @@ class MainActivity : AppCompatActivity(){
     private var song:Song = Song()
     private var gson: Gson = Gson()
 
+    var songs = arrayListOf<Song>()
+    lateinit var songDB : SongDatabase
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         //앱이 로드되는 동안에는 splash화면이 나오지만 -> onCreate가 호출되면 >>
@@ -187,17 +191,12 @@ class MainActivity : AppCompatActivity(){
 
     override fun onStart(){
         super.onStart()
-//        val sharedPreferences = getSharedPreferences("song", MODE_PRIVATE)
-//        val songJson = sharedPreferences.getString("songData",null)
-//        //val albumJson = getSharedPreferences("album", MODE_PRIVATE) //이건 아닌 것 같음, 데이터 받아오는 거
-//
-//
-//        song = if(songJson == null){
-//            Song("내일의 우리","카더가든",0,60,false,"music_tomorow")
-//        }else{
-//            gson.fromJson(songJson,Song::class.java)
-//        }
+        initSong()
 
+
+    }
+
+    private fun initSong(){
         val spf = getSharedPreferences("song", MODE_PRIVATE)
         val songId = spf.getInt("songId",0)
 
@@ -211,7 +210,6 @@ class MainActivity : AppCompatActivity(){
         Log.d("Song ID",song.id.toString())
 
         setMiniPlayer(song)
-
     }
 
 

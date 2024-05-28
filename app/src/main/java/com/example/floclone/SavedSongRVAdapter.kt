@@ -8,12 +8,14 @@ import com.example.floclone.databinding.ItemSongBinding
 class SavedSongRVAdapter() :
     RecyclerView.Adapter<SavedSongRVAdapter.ViewHolder>() {
     private val songs = ArrayList<Song>()
+    //콜백
     interface MyItemClickListener{
         fun onRemoveSong(songId: Int)
     }
     private lateinit var mItemClickListener : MyItemClickListener
 
     fun setMyItemClickListener(itemClickListener: MyItemClickListener){
+        //아이템이 눌렸을 때
         mItemClickListener = itemClickListener
     }
 
@@ -27,8 +29,8 @@ class SavedSongRVAdapter() :
     override fun onBindViewHolder(holder: SavedSongRVAdapter.ViewHolder, position: Int) {
         holder.bind(songs[position])
         holder.binding.itemSongMoreIv.setOnClickListener {
-            mItemClickListener.onRemoveSong(songs[position].id)
-            removeSong(position)
+            mItemClickListener.onRemoveSong(songs[position].id) //해당 아이템 클릭
+            removeSong(position) //콜백함수 인터페이스
         }
     }
 
@@ -42,6 +44,7 @@ class SavedSongRVAdapter() :
         notifyDataSetChanged()
     }
 
+    //점세개 눌렀을 때 지우는 거
     @SuppressLint("NotifyDataSetChanged")
     private fun removeSong(position: Int){
         songs.removeAt(position)
