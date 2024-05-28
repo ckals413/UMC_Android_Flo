@@ -75,6 +75,14 @@ class SongActivity : AppCompatActivity(){
         binding.songPauseIv.setOnClickListener {
             setPlayerStatus(false)
         }
+        //하트
+        binding.songLikeIv.setOnClickListener {
+            setLikeStatus(true)
+        }
+        //하트
+        binding.songLikeOnIv.setOnClickListener {
+            setLikeStatus(false)
+        }
         binding.songNextIv.setOnClickListener {
             moveSong(1)
         }
@@ -141,6 +149,7 @@ class SongActivity : AppCompatActivity(){
         val music = resources.getIdentifier(song.music, "raw",this.packageName)
         mediaPlayer = MediaPlayer.create(this,music) //미디어 플레이어에 어떤 음악이 실행될 지 알림
         setPlayerStatus(song.isPlaying)
+        setLikeStatus(song.isLike)
 
     }
 
@@ -162,6 +171,23 @@ class SongActivity : AppCompatActivity(){
             }
         }
     }
+
+    //하트 버튼 변경
+    private fun setLikeStatus(isLike :Boolean){
+        songs[nowPos].isLike = isLike
+
+        if(isLike){
+            binding.songLikeIv.visibility= View.GONE
+            binding.songLikeOnIv.visibility = View.VISIBLE
+
+        }
+        else{
+            binding.songLikeIv.visibility= View.VISIBLE
+            binding.songLikeOnIv.visibility = View.GONE
+
+        }
+    }
+
 
     private fun startTimer(){
         timer = Timer(songs[nowPos].playTime,songs[nowPos].isPlaying)
