@@ -5,6 +5,7 @@ import android.media.MediaPlayer
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import android.widget.Toast
 import com.example.floclone.databinding.ActivityMainBinding
 import com.google.gson.Gson
@@ -17,7 +18,9 @@ class MainActivity : AppCompatActivity() {
     private var song: Song = Song()
     private var gson: Gson = Gson()
     private var mediaPlayer: MediaPlayer? = null //미디어 플레이어
+    lateinit var timer : SongActivity.Timer //타이머 변수 초기화
 
+    val songs = arrayListOf<Song>()
     lateinit var songDB: SongDatabase
     var nowPos = 0
 
@@ -109,10 +112,38 @@ class MainActivity : AppCompatActivity() {
             moveSong(-1)
         }
         binding.mainStartMusicBtn.setOnClickListener {
-            togglePlayPause()
+            setPlayerStatus(true)
         }
         binding.mainNextMusicBtn.setOnClickListener {
             moveSong(1)
+        }
+        // MediaPlayer 초기화 및 설정
+        if (mediaPlayer == null) {
+            val musicResId = resources.getIdentifier(song.music, "raw", packageName)
+            mediaPlayer = MediaPlayer.create(this, musicResId)
+            mediaPlayer?.setOnCompletionListener {
+                moveSong(1) // 자동으로 다음 곡으로 이동
+            }
+        }
+
+    }
+
+    //재생 버튼 변경
+    private fun setPlayerStatus(isPlaying :Boolean){
+        songs[nowPos].isPlaying = isPlaying
+        timer.isPlaying = isPlaying
+
+        if(isPlaying){
+            binding.mainStartMusicBtn.visibility= View.GONE
+            binding.mainPauseMusicBtn.visibility = View.VISIBLE
+            mediaPlayer?.start()
+        }
+        else{
+            binding.mainStartMusicBtn.visibility= View.VISIBLE
+            binding.mainPauseMusicBtn.visibility = View.GONE
+            if(mediaPlayer?.isPlaying == true){ //mediaPlayer에서는 재생중이 아닐 때 pause하면 오류 => if문으로
+                mediaPlayer?.pause()
+            }
         }
     }
 
@@ -131,6 +162,10 @@ class MainActivity : AppCompatActivity() {
 
         nowPos += direct
         song = songs[nowPos]
+
+        mediaPlayer?.release()
+        mediaPlayer = null // MediaPlayer를 해제하고 null로 설정
+
         setMiniPlayer(song)
 
         val editor = getSharedPreferences("song", MODE_PRIVATE).edit()
