@@ -40,6 +40,7 @@ class SongActivity : AppCompatActivity(){
 
         initPlayList()
         initSong()
+        initClickListener()
 
 
         //반복재생
@@ -52,6 +53,17 @@ class SongActivity : AppCompatActivity(){
         }
 
 
+
+
+
+    }
+
+    private fun initPlayList(){
+        songDB = SongDatabase.getInstance(this)!!
+        songs.addAll(songDB.songDao().getSongs())
+    }
+
+    private fun initClickListener(){
         //밑에 버튼 클릭했을 때 (오른쪽 상단, 아래 화살표)
         binding.songDownIb.setOnClickListener{
             //songActivity화면 전환 종료
@@ -63,13 +75,12 @@ class SongActivity : AppCompatActivity(){
         binding.songPauseIv.setOnClickListener {
             setPlayerStatus(false)
         }
-
-
-    }
-
-    private fun initPlayList(){
-        songDB = SongDatabase.getInstance(this)!!
-        songs.addAll(songDB.songDao().getSongs())
+        binding.songNextIv.setOnClickListener {
+            moveSong(1)
+        }
+        binding.songPreviousIv.setOnClickListener {
+            moveSong(-1)
+        }
     }
 
     //song에서 데이터를 받아오는 함수
@@ -84,6 +95,28 @@ class SongActivity : AppCompatActivity(){
 
         startTimer()
         setPlayer(songs[nowPos])
+    }
+
+    private fun moveSong(direct: Int){
+        if(nowPos + direct<0){
+            Toast.makeText(this, "first song",Toast.LENGTH_SHORT).show()
+            return
+        }
+        if(nowPos + direct>=songs.size){
+            Toast.makeText(this, "last song",Toast.LENGTH_SHORT).show()
+            return
+        }
+        nowPos += direct
+
+        timer.interrupt()
+        startTimer()
+
+        mediaPlayer?.release() //미디어 플레이어가 갖고있던 리소스 해제
+        mediaPlayer = null //미디어 플레이어 해제
+
+        setPlayer(songs[nowPos])
+
+
     }
 
     private fun getPlayingSongPosition(songId: Int): Int{
