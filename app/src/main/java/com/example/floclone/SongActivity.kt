@@ -16,7 +16,7 @@ class SongActivity : AppCompatActivity(){
     //선언은 지금하지만 나중에 초기화 할게
     //카멜 표기식
     //전역변수
-    lateinit var song: Song
+
     lateinit var binding : ActivitySongBinding
     lateinit var timer : Timer //타이머 변수 초기화
     private var mediaPlayer: MediaPlayer? = null //미디어 플레이어
@@ -112,7 +112,7 @@ class SongActivity : AppCompatActivity(){
 
     //재생 버튼 변경
     private fun setPlayerStatus(isPlaying :Boolean){
-        song.isPlaying = isPlaying
+        songs[nowPos].isPlaying = isPlaying
         timer.isPlaying = isPlaying
 
         if(isPlaying){
@@ -130,7 +130,7 @@ class SongActivity : AppCompatActivity(){
     }
 
     private fun startTimer(){
-        timer = Timer(song.playTime,song.isPlaying)
+        timer = Timer(songs[nowPos].playTime,songs[nowPos].isPlaying)
         timer.start()
     }
 
@@ -213,14 +213,14 @@ class SongActivity : AppCompatActivity(){
         //binding.songStartTimeTv.setText("00:00") --> 시간을 초기화 하는건 어떻게?
         //binding.songEndTimeTv.setText("01:00")
 
-        song.second = ((binding.songProgressSb.progress*song.playTime/100))/1000
+        songs[nowPos].second = ((binding.songProgressSb.progress*songs[nowPos].playTime/100))/1000
         //song 데이터저장
         //앱이 종료되었다가 다시 실행되어도 저장된 데이터를 꺼내서 사용하게해줌,에디터라는 것 을 사용
         val sharedPreferences = getSharedPreferences("song", MODE_PRIVATE) //song은 sharedPreference의 이름
         val editor = sharedPreferences.edit() //에디터를 사용해서 하나하나 넣어도 되지만 json으로 한번에 객체로 만들어 넣는다!
         // editor.putString("title",song.title)
         // editor.putString("title",song.singer),,,, //gson을 사용 -> 자바객체를 json으로 변환을 쉽게한다.
-        val songJson = gson.toJson(song) //song객체를 json포멧으로 변환
+        val songJson = gson.toJson(songs[nowPos]) //song객체를 json포멧으로 변환
         editor.putString("songData",songJson)
         editor.apply() //git에서 commit과 push와 같은 작용을 함
 
