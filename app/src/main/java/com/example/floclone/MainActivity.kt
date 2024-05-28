@@ -27,6 +27,9 @@ class MainActivity : AppCompatActivity(){
         val view = binding.root
         setContentView(binding.root)
 
+        initBottomNavigation()
+        inputDummySongs()
+
         //이제 필요없음 -> sharedPreferences로 값을 가져오기 때문
         //val song = Song(binding.mainPlayTitleTv.text.toString(),binding.mainPlaySingerTv.text.toString(),0,60,false,"music_tomorow")
 
@@ -45,8 +48,6 @@ class MainActivity : AppCompatActivity(){
 
             startActivity(intent)
         }
-
-        initBottomNavigation()
 
         Log.d("Song",song.title+song.singer)
     }
@@ -101,6 +102,82 @@ class MainActivity : AppCompatActivity(){
         binding.mainPlaySingerTv.text = singer ?: song.singer
         binding.mainMiniplayerProgressSb.progress = (song.second*100000)/song.playTime
     }
+
+    private fun inputDummySongs(){
+        val songDB = SongDatabase.getInstance(this) //songDB의 인스턴스를 받아옴
+        val songs = songDB?.songDao()?.getSongs() //물음표를 붙임? -> 영상같이 하면 빨간밑줄 safe
+
+        if(songs?.isNotEmpty() == true)return // 같은 방식인가?
+        songDB?.songDao()?.insert(
+            Song(
+                "내일의 우리",
+                "카더가든",
+                0,
+                230,
+                false,
+                "music_tomorow",
+                R.drawable.img_album_exp3,
+                false,
+            )
+        )
+
+        songDB?.songDao()?.insert(
+            Song(
+                "Shake It Off",
+                "Taylor Swift",
+                0,
+                240,
+                false,
+                "music_shakeitoff",
+                R.drawable.img_album_exp,
+                false,
+            )
+        )
+
+        songDB?.songDao()?.insert(
+            Song(
+                "우리의 사랑은",
+                "찰리빈웍스",
+                0,
+                230,
+                false,
+                "music_welove",
+                R.drawable.img_album_exp4,
+                false,
+            )
+        )
+
+        songDB?.songDao()?.insert(
+            Song(
+                "Surf Boy",
+                "혁오",
+                0,
+                230,
+                false,
+                "music_surfboy",
+                R.drawable.img_album_exp6,
+                false,
+            )
+        )
+
+        songDB?.songDao()?.insert(
+            Song(
+                "Ling Ling",
+                "검정치마",
+                0,
+                230,
+                false,
+                "music_lingling",
+                R.drawable.img_album_exp5,
+                false,
+            )
+        )
+
+        val _songs= songDB?.songDao()?.getSongs()
+        Log.d("DBDB",_songs.toString()) //데이터가 잘 들어왔는지 확인
+
+    }
+
 
     override fun onStart(){
         super.onStart()
