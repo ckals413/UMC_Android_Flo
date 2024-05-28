@@ -96,11 +96,12 @@ class SongActivity : AppCompatActivity(){
     }
 
     private fun setPlayer(song:Song){
-        binding.songMusicTitleTv.text=intent.getStringExtra("title")!!
-        binding.songSingerNameTv.text=intent.getStringExtra("singer")!!
+        binding.songMusicTitleTv.text=song.title
+        binding.songSingerNameTv.text=song.singer
         //시간
         binding.songStartTimeTv.text = String.format("%02d:%02d",song.second/60, song.second%60)
         binding.songEndTimeTv.text = String.format("%02d:%02d",song.playTime/60, song.playTime%60)
+        binding.songAlbumIv.setImageResource(song.coverImg!!)
         binding.songProgressSb.progress = (song.second*1000/song.playTime)
 
         //리소스 파일에서 string값으로 찾아서 리소스를 반환 -> resorce.getIdentifier
@@ -220,8 +221,10 @@ class SongActivity : AppCompatActivity(){
         val editor = sharedPreferences.edit() //에디터를 사용해서 하나하나 넣어도 되지만 json으로 한번에 객체로 만들어 넣는다!
         // editor.putString("title",song.title)
         // editor.putString("title",song.singer),,,, //gson을 사용 -> 자바객체를 json으로 변환을 쉽게한다.
-        val songJson = gson.toJson(songs[nowPos]) //song객체를 json포멧으로 변환
-        editor.putString("songData",songJson)
+        //val songJson = gson.toJson(songs[nowPos]) //song객체를 json포멧으로 변환
+        //앱이 종료될때는 song자체를 저장하는게 아니라 songid를 저장
+
+        editor.putInt("songId",songs[nowPos].id)
         editor.apply() //git에서 commit과 push와 같은 작용을 함
 
     }
