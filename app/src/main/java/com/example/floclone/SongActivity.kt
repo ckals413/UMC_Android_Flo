@@ -79,6 +79,15 @@ class SongActivity : AppCompatActivity(){
         binding.songLikeIv.setOnClickListener {
             //setLikeStatus(true)
             setLike(songs[nowPos].isLike)
+            if(!songs[nowPos].isLike) {
+                Toast.makeText(applicationContext, "하트를 취소했습니다.", Toast.LENGTH_SHORT).show()
+            }
+            else{
+                Toast.makeText(applicationContext, "하트를 눌렀습니다.", Toast.LENGTH_SHORT).show()
+            }
+
+
+
         }
 //        //하트
 //        binding.songLikeOnIv.setOnClickListener {

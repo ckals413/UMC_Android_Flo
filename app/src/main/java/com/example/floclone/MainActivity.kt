@@ -163,18 +163,14 @@ class MainActivity : AppCompatActivity() {
         nowPos += direct
         song = songs[nowPos]
 
-        mediaPlayer?.release()
-        mediaPlayer = null // MediaPlayer를 해제하고 null로 설정
+        mediaPlayer?.release() //미디어 플레이어가 갖고있던 리소스 해제
+        mediaPlayer = null //미디어 플레이어 해제
 
         setMiniPlayer(song)
 
         val editor = getSharedPreferences("song", MODE_PRIVATE).edit()
         editor.putInt("songId", song.id)
         editor.apply()
-    }
-
-    private fun togglePlayPause() {
-        //아직 안함
     }
 
     private fun inputDummySongs() {
