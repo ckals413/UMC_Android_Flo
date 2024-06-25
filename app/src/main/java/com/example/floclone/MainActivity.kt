@@ -130,6 +130,11 @@ class MainActivity : AppCompatActivity() {
 
     //재생 버튼 변경
     private fun setPlayerStatus(isPlaying :Boolean){
+        if (songs.isEmpty()) { // 리스트가 비어 있는지 확인
+            Toast.makeText(this, "No songs available", Toast.LENGTH_SHORT).show()
+            return
+        }
+
         songs[nowPos].isPlaying = isPlaying
         timer.isPlaying = isPlaying
 
@@ -149,6 +154,12 @@ class MainActivity : AppCompatActivity() {
 
     private fun moveSong(direct: Int) {
         val songs = songDB.songDao().getSongs()
+
+        if (songs.isEmpty()) { // 리스트가 비어 있는지 확인
+            Toast.makeText(this, "No songs available", Toast.LENGTH_SHORT).show()
+            return
+        }
+
         nowPos = songs.indexOfFirst { it.id == song.id }
 
         if (nowPos + direct < 0) {
