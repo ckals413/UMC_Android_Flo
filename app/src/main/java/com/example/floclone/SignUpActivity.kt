@@ -33,6 +33,7 @@ class SignUpActivity :AppCompatActivity() {
             Toast.makeText(this,"이메일 형식이 잘못되었습니다.",Toast.LENGTH_SHORT).show()
             return
         }
+
         if(binding.signUpPasswordEt.text.toString() != binding.signUpPasswordCheckEt.text.toString()){
             Toast.makeText(this,"비밀번호가 일치하지 않습니다.",Toast.LENGTH_SHORT).show()
             return
