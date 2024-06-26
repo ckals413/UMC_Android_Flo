@@ -14,7 +14,7 @@ import com.google.android.material.tabs.TabLayoutMediator
 class LockerFragment: Fragment() {
     lateinit var binding:FragmentLockerBinding
     //탭 레이아웃에 들어갈 칸마다의 문자
-    private val information = arrayListOf("저장한 곡","음악파일")
+    private val information = arrayListOf("저장한 곡","음악파일","저장앨범")
 
     override fun onCreateView(
         inflater: LayoutInflater,
