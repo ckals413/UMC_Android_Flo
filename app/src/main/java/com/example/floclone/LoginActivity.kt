@@ -35,18 +35,21 @@ class LoginActivity : AppCompatActivity() {
             Toast.makeText(this,"비밀번호를 입력해주세요.", Toast.LENGTH_SHORT).show()
             return
         }
+        val loginName : String = binding.loginIdEt.text.toString()
         val email : String = binding.loginIdEt.text.toString()+binding.loginDirectInputEt.text.toString()
         val pwd : String = binding.loginPasswordEt.text.toString()
 
         val songDB = SongDatabase.getInstance(this)!!
         val user = songDB.UserDao().getUser(email,pwd)
 
-        user?.let{
-            Log.d("LOGIN_ACT/GET_USER","userId : ${user.id}, $user")
+        if (user != null) {
+            Log.d("LOGIN_ACT/GET_USER", "userId: ${user.id}, $user")
             saveJwt(user.id)
+            Toast.makeText(this, "$loginName 님 로그인하셨습니다.", Toast.LENGTH_SHORT).show() // loginName을 포함한 토스트 메시지
             startMainActivity()
+        } else {
+            Toast.makeText(this, "회원정보가 존재하지 않습니다.", Toast.LENGTH_SHORT).show()
         }
-        Toast.makeText(this,"회원정보가 존재하지 않습니다.",Toast.LENGTH_SHORT).show()
     }
     //jwt를 저장하는 함수
     private fun saveJwt(jwt:Int){
