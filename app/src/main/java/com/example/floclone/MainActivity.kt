@@ -63,6 +63,7 @@ class MainActivity : AppCompatActivity() {
         }
 
         Log.d("Song", song.title + song.singer)
+        Log.d("MAIN/JWT_TO_SERVER",getJwt().toString())
     }
 
     private fun initBottomNavigation() {
@@ -307,6 +308,12 @@ class MainActivity : AppCompatActivity() {
 
         val _albums = songDB.songDao().getSongs()
         Log.d("DBDB", _albums.toString()) //데이터가 잘 들어왔는지 확인
+    }
+
+    private fun getJwt(): String?{
+        //앞에서 했던 auth로 받아오고, ?는 프래그먼트에서 사용할 때 사용하는 문법이라고 생각
+        val spf = this.getSharedPreferences("auth",AppCompatActivity.MODE_PRIVATE)
+        return spf!!.getString("jwt","") //sharedPreference에서 가져온 값이 없다면 0을 반환
     }
 
     override fun onStart() {
