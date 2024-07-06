@@ -1,6 +1,8 @@
 package com.example.floclone
 
 import android.util.Log
+import com.example.floclone.data.remote.getRetrofit
+import com.example.floclone.ui.main.look.LookView
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response

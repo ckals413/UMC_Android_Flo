@@ -4,8 +4,11 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
-import androidx.room.migration.Migration
-import androidx.sqlite.db.SupportSQLiteDatabase
+import com.example.floclone.data.entities.Album
+import com.example.floclone.data.entities.Like
+import com.example.floclone.data.entities.Song
+import com.example.floclone.data.entities.User
+import com.example.floclone.ui.main.album.AlbumDao
 
 @Database(entities = [Song::class, User::class, Like::class, Album::class], version = 2)
 abstract class SongDatabase: RoomDatabase(){
